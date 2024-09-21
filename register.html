@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">EC site</div>
+            <div class="nav-links">
+                <a href="#">login</a>
+                <a href="#">sign up</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="login-container">
+            <h1>resister</h1>
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">resister</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
