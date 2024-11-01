@@ -9,7 +9,11 @@ const client = new Client({
   port: process.env.PORT,
 });
 client.connect();
-client.query("SELECT NOW()", (err, res) => {
+// client.query("SELECT NOW()", (err, res) => {
+//     console.log(err, res);
+//     client.end();
+//   });
+client.query("SELECT * FROM users", (err, res) => {
     console.log(err, res);
     client.end();
   });
