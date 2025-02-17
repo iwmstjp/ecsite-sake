@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require("dotenv");
 const bcrypt = require('bcrypt');
+const expressLayouts = require('express-ejs-layouts');
 dotenv.config();
 const router = express.Router();
 
@@ -13,6 +14,13 @@ const router = express.Router();
 //   port: process.env.PORT,
 // });
 // client.connect();
+
+// レイアウト設定を追加
+router.use(expressLayouts);
+router.use((req, res, next) => {
+  res.locals.layout = 'layouts/layout';
+  next();
+});
 
 router.get('/', (req, res) => {
   res.render('index');
