@@ -46,18 +46,32 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.post('/login', (req, res) =>{
-    const {username, password} = req.body;
-    console.log(username, password);
-    // const query = {
-    //   text: "SELECT * FROM users WHERE username = $1 AND password = $2",
-    //   values: [username, password],
-    // };
-    // client.query(query).then((res) => {
-    //   console.log(res);
-    // });
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  console.log(username, password);
+  try {
+    const query = {
+      text: "SELECT * FROM customuser WHERE username = $1",
+      values: [username],
+    };
+    const result = await client.query(query);
+    const user = result.rows[0];
+
+    if (!user) {
+      return res.status(401).send('Invalid username or password');
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).send('Invalid username or password');
+    }
+
     res.redirect('/');
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error logging in');
+  }
+});
 
 router.get('/signup', (req, res) => {
   res.render('signup');
