@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require("dotenv");
 const bcrypt = require('bcrypt');
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
 dotenv.config();
 const router = express.Router();
 
@@ -15,12 +16,26 @@ const client = new Client({
 });
 client.connect();
 
-// レイアウト設定を追加
 router.use(expressLayouts);
 router.use((req, res, next) => {
   res.locals.layout = 'layouts/layout';
   next();
 });
+router.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
+// 認証ミドルウェア
+function ensureAuthenticated(req, res, next) {
+  if (req.session.userId) {
+    return next();
+  } else {
+    res.status(401).send('You need to log in to access this page');
+  }
+}
 
 router.get('/', (req, res) => {
   res.render('index');
@@ -30,7 +45,7 @@ router.get('/item', (req, res) => {
   res.render('item');
 });
 
-router.get('/cart', (req, res) => {
+router.get('/cart', ensureAuthenticated, (req, res) => {
   res.render('cart');
 });
 
@@ -66,11 +81,18 @@ router.post('/login', async (req, res) => {
       return res.status(401).send('Invalid username or password');
     }
 
+    req.session.userId = user.id;
+
     res.redirect('/');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error logging in');
   }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
 });
 
 router.get('/signup', (req, res) => {
