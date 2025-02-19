@@ -68,8 +68,20 @@ router.get('/cart', ensureAuthenticated, async (req, res) => {
   };
   const result = await client.query(query);
   const cartItems = result.rows;
-  console.log(cartItems);
-  res.render('cart', { req, cartItems });
+  const cartItemsWithItem = await Promise.all(cartItems.map(async (item) => {
+    const query2 = {
+      text: "SELECT * FROM item WHERE id = $1",
+      values: [item.cart_item_id],
+    };
+    const result2 = await client.query(query2);
+    const cartItem = result2.rows[0];
+    return {
+      ...cartItem,
+      quantity: item.quantity,
+      total: cartItem.price * item.quantity,
+    };
+  }));
+  res.render('cart', { req, cartItems: cartItemsWithItem });
 });
 
 router.post('/cart', async (req, res) => {
