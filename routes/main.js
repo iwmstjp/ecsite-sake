@@ -37,28 +37,64 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-router.get('/', (req, res) => {
-  res.render('index');
+router.get('/', async (req, res) => {
+  const query = {
+    text: "SELECT * FROM item",
+  };
+  const result = await client.query(query);
+  const items = result.rows;
+  res.render('index', { req, items });
 });
 
 router.get('/item', (req, res) => {
-  res.render('item');
+  res.render('item', { req });
 });
 
-router.get('/cart', ensureAuthenticated, (req, res) => {
-  res.render('cart');
+router.post('/item', async (req, res) => {
+  const { itemId } = req.body;
+  const query = {
+    text: "SELECT * FROM item WHERE id = $1",
+    values: [itemId],
+  };
+  const result = await client.query(query);
+  res.render('item', { req, item: result.rows[0] });
+});
+
+router.get('/cart', ensureAuthenticated, async (req, res) => {
+
+  const query = {
+    text: "SELECT * FROM Cart_CartItem WHERE cart_id = $1",
+    values: [req.session.cartId],
+  };
+  const result = await client.query(query);
+  const cartItems = result.rows;
+  console.log(cartItems);
+  res.render('cart', { req, cartItems });
+});
+
+router.post('/cart', async (req, res) => {
+  const { itemId, quantity } = req.body;
+  if (quantity <= 0) {
+    return res.status(400).send('Quantity must be greater than 0');
+  }
+  const query = {
+    text: "INSERT INTO Cart_CartItem (cart_id, cart_item_id) VALUES ($1, $2)",
+    values: [req.session.cartId, itemId],
+  };
+  await client.query(query);
+  res.redirect('/cart');
 });
 
 router.get('/order', (req, res) => {
-  res.render('order');
+  res.render('order', { req });
 });
 
 router.get('/success', (req, res) => {
-  res.render('success');
+  res.render('success', { req });
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { req });
 });
 
 router.post('/login', async (req, res) => {
@@ -82,6 +118,7 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.userId = user.id;
+    req.session.cartId = user.cart;
 
     res.redirect('/');
   } catch (err) {
@@ -96,7 +133,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('signup', { req });
 });
 
 router.post('/signup', async (req, res) => {

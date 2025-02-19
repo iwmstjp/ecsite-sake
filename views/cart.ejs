@@ -10,18 +10,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Colorful Drink</td>
-                    <td>3200JPY</td>
-                    <td>1</td>
-                    <td>3200JPY</td>
-                </tr>
-                <tr>
-                    <td>Colorful Egg</td>
-                    <td>4800JPY</td>
-                    <td>3</td>
-                    <td>14400JPY</td>
-                </tr>
+                <% cartItems.forEach(item => { %>
+                    <tr>
+                        <td><%= item.name %></td>
+                        <td><%= item.price %></td>
+                        <td><%= item.quantity %></td>
+                    </tr>
+                <% }); %>
             </tbody>
             <tfoot>
                 <tr>
