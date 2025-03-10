@@ -1,16 +1,15 @@
-
-    <main>
-        <div class="product-grid">
-            <% items.forEach(item => { %>
-            <div class="product">
-                <img src="<%= item.image %>" alt="<%= item.name %>">
-                <h2><%= item.name %></h2>
-                <p><%= item.price %>JPY</p>
-                <form action="/item" method="post">
-                    <input type="hidden" name="itemId" value="<%= item.id %>">
-                    <button type="submit">view details</button>
-                </form>
-            </div>
-            <% }); %>
-        </div>
-    </main>
+<main>
+  <div class="product-grid">
+    <% items.forEach(item => { %>
+    <div class="product">
+      <img src="<%= item.image %>" alt="<%= item.name %>" />
+      <h2><%= item.name %></h2>
+      <p><%= item.price %>JPY</p>
+      <form action="/item" method="post">
+        <input type="hidden" name="itemId" value="<%= item.id %>" />
+        <button type="submit">view details</button>
+      </form>
+    </div>
+    <% }); %>
+  </div>
+</main>

@@ -13,7 +13,7 @@ client.connect();
 //     console.log(err, res);
 //     client.end();
 //   });
-client.query("SELECT * FROM customuser", (err, res) => {
-    console.log(err, res);
-    client.end();
-  });
+// client.query("SELECT * FROM customuser", (err, res) => {
+//     console.log(err, res);
+//     client.end();
+//   });

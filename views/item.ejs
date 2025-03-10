@@ -1,20 +1,19 @@
-
-    <main>
-        <div class="item-detail">
-            <img src="<%= item.image %>" alt="<%= item.name %>">
-            <div class="item-info">
-                <h2><%= item.name %></h2>
-                <p><%= item.price %>JPY</p>
-                <p><%= item.description %></p>
-                <% if (req.session.userId) { %>
-                <form action="/cart" method="post">
-                    <input type="number" name="quantity" min="1" value="0">
-                    <input type="hidden" name="itemId" value="<%= item.id %>">
-                    <button type="submit">add to cart</button>
-                </form>
-                <% } else { %>
-                    <p><a href="/login">Please log in</a> to add to cart</p>
-                <% } %>
-            </div>
-        </div>
-    </main>
+<main>
+  <div class="item-detail">
+    <img src="<%= item.image %>" alt="<%= item.name %>" />
+    <div class="item-info">
+      <h2><%= item.name %></h2>
+      <p><%= item.price %>JPY</p>
+      <p><%= item.description %></p>
+      <% if (req.session.userId) { %>
+      <form action="/cart" method="post">
+        <input type="number" name="quantity" min="1" value="0" />
+        <input type="hidden" name="itemId" value="<%= item.id %>" />
+        <button type="submit">add to cart</button>
+      </form>
+      <% } else { %>
+      <p><a href="/login">Please log in</a> to add to cart</p>
+      <% } %>
+    </div>
+  </div>
+</main>
