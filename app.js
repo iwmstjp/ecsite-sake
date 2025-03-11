@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const port = 3000;
 const app = express();
 
@@ -26,7 +27,7 @@ app.use("/", itemRoutes);
 app.use("/", authRoutes);
 app.use("/", cartRoutes);
 app.use("/", paymentRoutes);
-
+app.use("/", adminRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

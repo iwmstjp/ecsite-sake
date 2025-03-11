@@ -1,0 +1,12 @@
+<main>
+  <div class="admin-edit-item">
+    <h1>Edit item</h1>
+    <form action="/admin/edit-item/<%= item.id %>" method="post">
+      <input type="text" name="name" value="<%= item.name %>" />
+      <input type="text" name="price" value="<%= item.price %>" />
+      <input type="text" name="description" value="<%= item.description %>" />
+      <input type="text" name="image" value="<%= item.image %>" />
+      <button type="submit">edit</button>
+    </form>
+  </div>
+</main>

@@ -1,5 +1,9 @@
 const express = require("express");
-const { getItems, getCartItems, deleteAllCartItems } = require("../controllers/cartController");
+const {
+  getItems,
+  getCartItems,
+  deleteAllCartItems,
+} = require("../controllers/cartController");
 const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 

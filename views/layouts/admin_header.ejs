@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="/styles.css" />
+<header>
+  <div class="navbar">
+    <div class="logo"><a href="/admin/dashboard">Admin</a></div>
+    <div class="nav-links">
+      <% if (req.session.userId) { %>
+      <a href="/logout">logout</a>
+      <% } else { %>
+      <a href="/login">login</a>
+      <a href="/signup">sign up</a>
+      <% } %>
+    </div>
+  </div>
+</header>

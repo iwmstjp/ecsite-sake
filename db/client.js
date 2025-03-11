@@ -1,4 +1,5 @@
 const { Client } = require("pg");
+const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -12,4 +13,20 @@ const client = new Client({
 
 client.connect();
 
-module.exports = { client };
+const createAdminUser = async () => {
+  const hashedPassword = await bcrypt.hash("admin", 10);
+  const query = {
+    text: "INSERT INTO adminuser (username, password, email, date_joined, permissions, is_active) VALUES ($1, $2, $3, $4, $5, $6)",
+    values: [
+      "admin",
+      hashedPassword,
+      "admin@example.com",
+      new Date(),
+      ["MANAGE_PRODUCTS", "MANAGE_USERS"],
+      true,
+    ],
+  };
+  await client.query(query);
+};
+
+module.exports = { client, createAdminUser };

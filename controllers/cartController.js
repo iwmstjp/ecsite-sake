@@ -1,5 +1,21 @@
 const { client } = require("../db/client");
 
+const fetchItems = async () => {
+  const query = {
+    text: "SELECT * FROM item",
+  };
+  const result = await client.query(query);
+  return result.rows;
+};
+
+const fetchItemById = async (itemId) => {
+  const query = {
+    text: "SELECT * FROM item WHERE id = $1",
+    values: [itemId],
+  };
+  const result = await client.query(query);
+  return result.rows[0];
+};
 const getCartItems = async (cartId) => {
   const query = {
     text: "SELECT * FROM Cart_CartItem WHERE cart_id = $1",
@@ -134,4 +150,6 @@ module.exports = {
   updateCartItem,
   addItemToCart,
   insertItemToCart,
+  fetchItems,
+  fetchItemById,
 };
