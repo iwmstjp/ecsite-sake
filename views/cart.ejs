@@ -1,4 +1,7 @@
 <main>
+  <% if(cartItems.length === 0) { %>
+  <p>Cart is empty</p>
+  <% } else { %>
   <table class="cart-table">
     <thead>
       <tr>
@@ -52,4 +55,5 @@
       <button type="submit">Proceed to Purchase</button>
     </form>
   </div>
+  <% } %>
 </main>

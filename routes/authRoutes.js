@@ -2,11 +2,13 @@ const express = require("express");
 const {
   createUserAndCart,
   loginUser,
+  rollbackTransaction,
 } = require("../controllers/authController");
+
 const router = express.Router();
 
 router.get("/login", (req, res) => {
-  res.render("login", { req });
+  res.render("login", { req, errorMessage: null });
 });
 
 router.post("/login", loginUser);
@@ -22,7 +24,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  res.render("signup", { req });
+  res.render("signup", { req, errorMessage: null });
 });
 
 router.post("/signup", async (req, res) => {
@@ -31,15 +33,15 @@ router.post("/signup", async (req, res) => {
     await createUserAndCart(username, password);
     res.redirect("/");
   } catch (err) {
-    await client.query("ROLLBACK");
+    await rollbackTransaction();
     console.error(err);
-    res
-      .status(500)
-      .send(
+    res.render("signup", {
+      req,
+      errorMessage:
         err.message === "Username already exists"
           ? "Username already exists"
-          : "Error creating user and cart"
-      );
+          : "Error creating user",
+    });
   }
 });
 

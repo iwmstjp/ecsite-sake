@@ -1,5 +1,9 @@
 const { client } = require("../db/client");
 const bcrypt = require("bcrypt");
+
+async function rollbackTransaction() {
+  await client.query("ROLLBACK");
+}
 async function getUserByUsername(username) {
   const query = {
     text: "SELECT * FROM customuser WHERE username = $1",
@@ -50,27 +54,31 @@ const createUserAndCart = async (username, password) => {
   await client.query("COMMIT");
 };
 
+async function validateUser(username, password) {
+  const user = await getUserByUsername(username);
+  if (!user) {
+    throw new Error("Invalid username or password");
+  }
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    throw new Error("Invalid username or password");
+  }
+  return user;
+}
+
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await getUserByUsername(username);
-
-    if (!user) {
-      return res.status(401).send("Invalid username or password");
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).send("Invalid username or password");
-    }
-
+    const user = await validateUser(username, password);
     req.session.userId = user.id;
     req.session.cartId = user.cart;
-
     res.redirect("/");
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error logging in");
+    res.render("login", {
+      req,
+      errorMessage: err.message,
+    });
   }
 };
 
@@ -80,4 +88,5 @@ module.exports = {
   createAdminUser,
   createUserAndCart,
   loginUser,
+  rollbackTransaction,
 };
