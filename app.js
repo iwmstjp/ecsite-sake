@@ -4,7 +4,7 @@ const session = require("express-session");
 const authRoutes = require("./routes/authRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-const paymentRoutes = require("./routes/paymenRoutest");
+const paymentRoutes = require("./routes/paymentRoutes");
 const port = 3000;
 const app = express();
 
