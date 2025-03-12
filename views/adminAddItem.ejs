@@ -1,11 +1,11 @@
 <main>
   <div class="admin-add-item">
     <h1>Add new item</h1>
-    <form action="/admin/add-item" method="post">
+    <form action="/admin/add-item" method="post" enctype="multipart/form-data">
       <input type="text" name="name" placeholder="Name" />
       <input type="text" name="price" placeholder="Price" />
       <input type="text" name="description" placeholder="Description" />
-      <input type="text" name="image" placeholder="Image" />
+      <input type="file" name="file" accept="image/*" />
       <button type="submit">Add</button>
     </form>
   </div>
