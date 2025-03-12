@@ -1,0 +1,15 @@
+<main>
+  <div class="profile-container">
+    <h1>Profile</h1>
+    <h2>Orders</h2>
+    <ul>
+      <% orders.forEach(order => { %>
+      <li>
+        ID: <%= order.id %> Price: <%= order.order_price %> JPY Date: <%=
+        order.ordered_date %>
+        <a href="/profile/order/<%= order.id %>">View</a>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</main>

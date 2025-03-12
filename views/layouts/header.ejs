@@ -4,6 +4,7 @@
     <div class="logo"><a href="/">EC site</a></div>
     <div class="nav-links">
       <% if (req.session.userId) { %>
+      <a href="/profile">profile</a>
       <a href="/logout">logout</a>
       <a href="/cart">cart</a>
       <% } else { %>

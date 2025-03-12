@@ -13,12 +13,18 @@ async function loginAdmin(req, res) {
     const user = result.rows[0];
 
     if (!user) {
-      return res.status(401).send("Invalid username or password");
+      return res.render("loginAdmin", {
+        req,
+        errorMessage: "Invalid username or password",
+      });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).send("Invalid username or password");
+      return res.render("loginAdmin", {
+        req,
+        errorMessage: "Invalid username or password",
+      });
     }
 
     req.session.userId = user.id;
@@ -28,7 +34,10 @@ async function loginAdmin(req, res) {
     res.render("adminDashboard", { req, items });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error logging in");
+    res.render("loginAdmin", {
+      req,
+      errorMessage: "Error logging in",
+    });
   }
 }
 const insertItem = async (name, price, description, image) => {

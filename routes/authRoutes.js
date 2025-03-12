@@ -3,6 +3,8 @@ const {
   createUserAndCart,
   loginUser,
   rollbackTransaction,
+  getUserOrders,
+  getOrderDetailsById,
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -43,6 +45,18 @@ router.post("/signup", async (req, res) => {
           : "Error creating user",
     });
   }
+});
+
+router.get("/profile", async (req, res) => {
+  const userId = req.session.userId;
+  const orders = await getUserOrders(userId);
+  res.render("profile", { req, orders });
+});
+
+router.get("/profile/order/:id", async (req, res) => {
+  const orderId = req.params.id;
+  const order = await getOrderDetailsById(orderId);
+  res.render("order", { req, order });
 });
 
 module.exports = router;

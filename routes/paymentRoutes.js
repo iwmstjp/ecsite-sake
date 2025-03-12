@@ -4,11 +4,11 @@ const {
   getCartItems,
   deleteAllCartItems,
 } = require("../controllers/cartController");
+const { createOrder } = require("../controllers/paymentController");
 const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-async function createPaymentSession(req) {
-  const cartItems = await getCartItems(req.session.cartId);
+async function createPaymentSession(req, cartItems) {
   const items = await getItems(
     cartItems.map((item) => item.cart_item_id),
     req.session.cartId
@@ -38,9 +38,13 @@ async function createPaymentSession(req) {
   return await stripe.checkout.sessions.create(params);
 }
 
+
+
 router.post("/payment", async (req, res) => {
   try {
-    const session = await createPaymentSession(req);
+    const cartItems = await getCartItems(req.session.cartId);
+    const session = await createPaymentSession(req, cartItems);
+    await createOrder(req.session.userId, req.session.cartId);
     await deleteAllCartItems(req.session.cartId);
     res.redirect(session.url);
   } catch (error) {

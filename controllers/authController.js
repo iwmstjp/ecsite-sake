@@ -50,7 +50,6 @@ const createUserAndCart = async (username, password) => {
   const cartId = cartResult.rows[0].id;
 
   await createUser(username, hashedPassword, cartId);
-
   await client.query("COMMIT");
 };
 
@@ -82,6 +81,37 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUserOrders = async (userId) => {
+  const query = {
+    text: `
+      SELECT * FROM Orders 
+      WHERE user_id = $1
+    `,
+    values: [userId],
+  };
+  const result = await client.query(query);
+  return result.rows;
+};
+
+const getOrderDetailsById = async (orderId) => {
+  const query = {
+    text: `
+      SELECT 
+        i.name, 
+        i.price, 
+        oi.cart_item_id, 
+        oi.quantity,
+        o.ordered_date
+      FROM Orders o
+      JOIN Orders_OrderItem oi ON o.id = oi.order_id
+      JOIN Item i ON oi.cart_item_id = i.id
+      WHERE o.id = $1
+    `,
+    values: [orderId],
+  };
+  const result = await client.query(query);
+  return result.rows;
+};
 module.exports = {
   getUserByUsername,
   createUser,
@@ -89,4 +119,6 @@ module.exports = {
   createUserAndCart,
   loginUser,
   rollbackTransaction,
+  getUserOrders,
+  getOrderDetailsById,
 };
