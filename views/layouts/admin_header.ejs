@@ -4,10 +4,9 @@
     <div class="logo"><a href="/admin/dashboard">Admin</a></div>
     <div class="nav-links">
       <% if (req.session.userId) { %>
-      <a href="/logout">logout</a>
+      <a href="/admin/logout">logout</a>
       <% } else { %>
-      <a href="/login">login</a>
-      <a href="/signup">sign up</a>
+      <a href="/admin/login">login</a>
       <% } %>
     </div>
   </div>

@@ -5,19 +5,21 @@ const {
   loginAdmin,
   insertItem,
   updateItem,
+  logoutAdmin,
 } = require("../controllers/adminController");
-const multer = require('multer');
-const path = require('path');
+const { ensureAdmin } = require("../middleware/auth");
+const multer = require("multer");
+const path = require("path");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/sake');
+    cb(null, "public/images/sake");
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
-  }
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
 });
 
 const upload = multer({ storage: storage });
@@ -30,17 +32,21 @@ router.post("/admin/login", async (req, res) => {
   await loginAdmin(req, res);
 });
 
+router.get("/admin/logout", async (req, res) => {
+  await logoutAdmin(req, res);
+  res.redirect("/admin/login");
+});
 
-router.get("/admin/dashboard", async (req, res) => {
+router.get("/admin/dashboard", ensureAdmin, async (req, res) => {
   const items = await fetchItems();
   res.render("adminDashboard", { req, items });
 });
 
-router.get("/admin/add-item/", async (req, res) => {
+router.get("/admin/add-item", ensureAdmin, async (req, res) => {
   res.render("adminAddItem", { req });
 });
 
-router.post("/admin/add-item", upload.single('file'), async (req, res) => {
+router.post("/admin/add-item", ensureAdmin, upload.single("file"), async (req, res) => {
   const { name, price, description } = req.body;
   const file = req.file;
   const imageName = file.filename;
@@ -48,16 +54,33 @@ router.post("/admin/add-item", upload.single('file'), async (req, res) => {
   res.redirect("/admin/dashboard");
 });
 
-router.get("/admin/edit-item/:itemId", async (req, res) => {
+router.get("/admin/edit-item/:itemId", ensureAdmin, async (req, res) => {
   const itemId = req.params.itemId;
   const item = await fetchItemById(itemId);
   res.render("adminEditItem", { req, item });
 });
 
-router.post("/admin/edit-item/:itemId", async (req, res) => {
-  const itemId = req.params.itemId;
-  await updateItem(req.body, itemId);
-  res.redirect("/admin/dashboard");
-});
+router.post(
+  "/admin/edit-item/:itemId",
+  ensureAdmin,
+  upload.single("file"),
+  async (req, res) => {
+    const itemId = req.params.itemId;
+    const { name, price, description } = req.body;
+    const file = req.file;
+    let imageName;
+    const existingItem = await fetchItemById(itemId);
+    if (file) {
+      imageName = file.filename;
+      console.log("true:" + imageName);
+    } else {
+      imageName = existingItem.image;
+      console.log("false:" + imageName);
+    }
+
+    await updateItem(name, price, description, imageName, itemId);
+    res.redirect("/admin/dashboard");
+  }
+);
 
 module.exports = router;
