@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="/item.css" />
   </head>
   <body>
-    <% if (req.session.isAdmin) { %> <%- include('admin_header') %> <% } else {
-    %> <%- include('header') %> <% } %> <%- body %> <%- include('footer') %>
+    <% if (req.path === '/admin/login') { %> <%- include('admin_header') %> <% }
+    else if (req.session.isAdmin) { %> <%- include('admin_header') %> <% } else
+    { %> <%- include('header') %> <% } %> <%- body %> <%- include('footer') %>
   </body>
 </html>

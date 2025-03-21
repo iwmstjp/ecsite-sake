@@ -1,9 +1,6 @@
 <main>
   <div class="login-container">
     <h1>login</h1>
-    <% if (errorMessage) { %>
-    <div class="error-message"><%= errorMessage %></div>
-    <% } %>
     <form action="/login" method="post">
       <div class="form-group">
         <label for="username">username</label>
@@ -13,6 +10,9 @@
         <label for="password">password</label>
         <input type="password" id="password" name="password" required />
       </div>
+      <% if (errorMessage) { %>
+      <div class="error-message"><%= errorMessage %></div>
+      <% } %>
       <button type="submit">login</button>
     </form>
   </div>
