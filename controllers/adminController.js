@@ -59,9 +59,17 @@ async function updateItem(name, price, description, image, itemId) {
   await client.query(query);
 }
 
+async function deleteItem(itemId) {
+  const query = {
+    text: "DELETE FROM item WHERE id = $1",
+    values: [itemId],
+  };
+  await client.query(query);
+}
 module.exports = {
   insertItem,
   loginAdmin,
   updateItem,
   logoutAdmin,
+  deleteItem,
 };

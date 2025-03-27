@@ -6,6 +6,7 @@ const {
   insertItem,
   updateItem,
   logoutAdmin,
+  deleteItem,
 } = require("../controllers/adminController");
 const { ensureAdmin } = require("../middleware/auth");
 const multer = require("multer");
@@ -82,5 +83,11 @@ router.post(
     res.redirect("/admin/dashboard");
   }
 );
+
+router.post("/admin/delete-item/:itemId", ensureAdmin, async (req, res) => {
+  const itemId = req.params.itemId;
+  await deleteItem(itemId);
+  res.redirect("/admin/dashboard");
+});
 
 module.exports = router;

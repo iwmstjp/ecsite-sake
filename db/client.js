@@ -13,17 +13,17 @@ const client = new Client({
 
 client.connect();
 
-const createAdminUser = async () => {
-  const hashedPassword = await bcrypt.hash("admin", 10);
+const createAdminUser = async (username, password, email, permissions, isActive) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
   const query = {
     text: "INSERT INTO adminuser (username, password, email, date_joined, permissions, is_active) VALUES ($1, $2, $3, $4, $5, $6)",
     values: [
-      "admin",
+      username,
       hashedPassword,
-      "admin@example.com",
+      email,
       new Date(),
-      ["MANAGE_PRODUCTS", "MANAGE_USERS"],
-      true,
+      permissions,
+      isActive,
     ],
   };
   await client.query(query);

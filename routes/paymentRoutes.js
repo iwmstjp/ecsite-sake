@@ -14,7 +14,7 @@ async function createPaymentSession(req, cartItems) {
     req.session.cartId
   );
   if (cartItems.length === 0) {
-    throw new Error("カートが空です。アイテムを追加してください。");
+    throw new Error("Cart is empty. Please add items to the cart.");
   }
   const cart_items = items.map((item) => ({
     quantity: item.quantity,
