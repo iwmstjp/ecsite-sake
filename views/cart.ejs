@@ -1,59 +1,61 @@
 <main>
-  <% if(cartItems.length === 0) { %>
-  <p>Cart is empty</p>
-  <% } else { %>
-  <table class="cart-table">
-    <thead>
-      <tr>
-        <th>Product Name</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% cartItems.forEach(item => { %>
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= parseInt(item.price) %>JPY</td>
-        <td>
-          <form action="/cart/update" method="post">
-            <input type="hidden" name="itemId" value="<%= item.id %>" />
-            <input
-              type="number"
-              min="1"
-              name="quantity"
-              value="<%= item.quantity %>"
-            />
-            <button type="submit">Update</button>
-          </form>
-        </td>
-        <td><%= parseInt(item.total) %>JPY</td>
-        <td>
-          <form action="/cart/delete" method="post">
-            <input type="hidden" name="itemId" value="<%= item.id %>" />
-            <button type="submit">Delete</button>
-          </form>
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3">Total:</td>
-        <td><%= total %>JPY</td>
-      </tr>
-    </tfoot>
-  </table>
-  <div class="cart-actions">
-    <button onclick="window.location.href='/'" class="button">
-      Continue Shopping
-    </button>
-    <form action="/payment" method="post">
-      <input type="hidden" name="amount" value="<%= total %>" />
-      <input type="hidden" name="currency" value="jpy" />
-      <button type="submit">Proceed to Purchase</button>
-    </form>
+  <div class="cart-container">
+    <% if(cartItems.length === 0) { %>
+    <p>Cart is empty</p>
+    <% } else { %>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cartItems.forEach(item => { %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.price %>JPY</td>
+          <td class="cart-table-quantity">
+            <form action="/cart/update" method="post">
+              <input type="hidden" name="itemId" value="<%= item.id %>" />
+              <input
+                type="number"
+                min="1"
+                name="quantity"
+                value="<%= item.quantity %>"
+              />
+              <button type="submit">Update</button>
+            </form>
+          </td>
+          <td><%= item.total %>JPY</td>
+          <td>
+            <form action="/cart/delete" method="post">
+              <input type="hidden" name="itemId" value="<%= item.id %>" />
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total:</td>
+          <td><%= total %>JPY</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="cart-actions">
+      <button onclick="window.location.href='/'" class="button">
+        Continue Shopping
+      </button>
+      <form action="/payment" method="post">
+        <input type="hidden" name="amount" value="<%= total %>" />
+        <input type="hidden" name="currency" value="jpy" />
+        <button type="submit">Proceed to Purchase</button>
+      </form>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 </main>

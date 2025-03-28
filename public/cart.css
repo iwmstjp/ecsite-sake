@@ -1,14 +1,37 @@
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.cart-table {
-  margin-bottom: 20px;
+.cart-container {
+  padding: 20px;
 }
 
+.cart-table thead th {
+  font-weight: normal;
+  width: 100px;
+}
+
+.cart-table tbody td {
+  text-align: center;
+}
+
+.cart-table-quantity {
+  width: 150px;
+}
+
+.cart-table-quantity input {
+  width: 50px;
+  text-align: center;
+}
+
+.cart-table tfoot {
+  height: 50px;
+  text-align: center;
+}
+.cart-table tfoot td:first-child {
+  text-align: right;
+}
 .cart-actions {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
+}
+.cart-container button {
+  background-color: #968ea8;
 }

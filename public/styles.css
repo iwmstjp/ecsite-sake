@@ -5,11 +5,13 @@ body {
 }
 
 .navbar {
-  background-color: #333;
+  background-color: #8b6f88;
   color: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  align-items: center;
+  vertical-align: middle;
+  padding: 10px 30px;
 }
 .logo a {
   font-size: 24px;
@@ -19,9 +21,23 @@ body {
 }
 
 .nav-links a {
+  font-size: 18px;
   color: #fff;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
   text-decoration: none;
+}
+
+.nav-links-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a svg {
+  margin-right: 5px;
+  width: 24px;
+  height: 24px;
 }
 
 .hero {
@@ -56,15 +72,22 @@ body {
 }
 
 button {
-  background-color: #333;
+  background-color: #8b6f88;
   border: none;
   color: #fff;
   cursor: pointer;
-  margin-top: 10px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
 }
 
 button:hover {
-  background-color: #555;
+  background-color: #968ea8;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }

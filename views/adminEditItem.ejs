@@ -34,10 +34,12 @@
         <label for="file">Image</label>
         <input type="file" name="file" accept="image/*" />
       </div>
-      <button type="submit">edit</button>
-    </form>
-    <form action="/admin/delete-item/<%= item.id %>" method="post">
-      <button type="submit">delete</button>
+      <div class="admin-edit-item-form-buttons">
+        <button type="submit">edit</button>
+        <form action="/admin/delete-item/<%= item.id %>" method="post">
+          <button type="submit">delete</button>
+        </form>
+      </div>
     </form>
   </div>
 </main>

@@ -1,20 +1,26 @@
 .item-detail {
   display: flex;
   justify-content: space-between;
-  background-color: #f9f9f9;
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   margin: 20px;
+  width: 35%;
 }
 
 .item-detail img {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 250px;
+  max-height: 250px;
   border-radius: 10px;
 }
 
-.item-info {
-  margin-left: 20px;
+.admin-edit-item-form-group {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.admin-edit-item-form-buttons {
+  display: flex;
+  justify-content: space-around;
 }
