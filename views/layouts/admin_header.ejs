@@ -4,7 +4,10 @@
     <div class="logo"><a href="/admin/dashboard">Admin</a></div>
     <div class="nav-links">
       <% if (req.session.userId) { %>
-      <a href="/admin/logout">logout</a>
+      <div class="admin-actions">
+        <a href="/admin/add-item">Add new item</a>
+        <a href="/admin/logout">logout</a>
+      </div>
       <% } %>
     </div>
   </div>

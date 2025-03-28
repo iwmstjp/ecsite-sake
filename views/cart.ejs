@@ -1,7 +1,12 @@
 <main>
   <div class="cart-container">
     <% if(cartItems.length === 0) { %>
-    <p>Cart is empty</p>
+    <h1>Cart is empty</h1>
+    <div class="cart-actions">
+      <button onclick="window.location.href='/'" class="button">
+        Continue Shopping
+      </button>
+    </div>
     <% } else { %>
     <table class="cart-table">
       <thead>

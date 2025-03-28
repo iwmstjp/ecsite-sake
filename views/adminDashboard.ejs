@@ -1,9 +1,9 @@
 <main>
   <div class="admin-dashboard">
     <h1>Admin Dashboard</h1>
-    <div class="product-grid">
+    <div class="item-grid">
       <% items.forEach(item => { %>
-      <div class="product">
+      <div class="item">
         <img src="/images/sake/<%= item.image %>" alt="<%= item.name %>" />
         <h2><%= item.name %></h2>
         <p><%= item.price %>JPY</p>
@@ -12,9 +12,6 @@
         </form>
       </div>
       <% }); %>
-    </div>
-    <div class="admin-actions">
-      <a href="/admin/add-item">Add new item</a>
     </div>
   </div>
 </main>
