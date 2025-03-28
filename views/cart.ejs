@@ -29,11 +29,11 @@
               <button type="submit">Update</button>
             </form>
           </td>
-          <td><%= item.total %>JPY</td>
+          <td><%= item.total.toFixed(2) %>JPY</td>
           <td>
             <form action="/cart/delete" method="post">
               <input type="hidden" name="itemId" value="<%= item.id %>" />
-              <button type="submit">Delete</button>
+              <button type="submit">Remove</button>
             </form>
           </td>
         </tr>
@@ -42,7 +42,7 @@
       <tfoot>
         <tr>
           <td colspan="3">Total:</td>
-          <td><%= total %>JPY</td>
+          <td><%= total.toFixed(2) %>JPY</td>
         </tr>
       </tfoot>
     </table>

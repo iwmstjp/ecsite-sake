@@ -12,6 +12,14 @@ async function getUserByUsername(username) {
   const result = await client.query(query);
   return result.rows[0];
 }
+async function getUserById(userId) {
+  const query = {
+    text: "SELECT * FROM customuser WHERE id = $1",
+    values: [userId],
+  };
+  const result = await client.query(query);
+  return result.rows[0];
+}
 
 async function createUser(username, hashedPassword, cartId) {
   const userQuery = {
@@ -121,4 +129,5 @@ module.exports = {
   rollbackTransaction,
   getUserOrders,
   getOrderDetailsById,
+  getUserById,
 };

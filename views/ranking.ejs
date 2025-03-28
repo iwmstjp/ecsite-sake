@@ -1,0 +1,11 @@
+<main class="ranking-page">
+  <div class="ranking-container">
+    <h1>Ranking</h1>
+    <% top10Sake.forEach((item, index) => { %>
+    <div>Rank <%= index + 1 %>: <%= item.name %></div>
+    <% }) %>
+  </div>
+  <div class="cite">
+    This ranking uses the <a href=" https://sakenowa.com">さけのわ</a> API.
+  </div>
+</main>

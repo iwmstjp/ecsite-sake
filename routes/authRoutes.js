@@ -5,6 +5,7 @@ const {
   rollbackTransaction,
   getUserOrders,
   getOrderDetailsById,
+  getUserById,
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -50,7 +51,8 @@ router.post("/signup", async (req, res) => {
 router.get("/profile", async (req, res) => {
   const userId = req.session.userId;
   const orders = await getUserOrders(userId);
-  res.render("profile", { req, orders });
+  const user = await getUserById(userId);
+  res.render("profile", { req, orders, user });
 });
 
 router.get("/profile/order/:id", async (req, res) => {
