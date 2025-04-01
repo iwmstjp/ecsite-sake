@@ -1,6 +1,7 @@
 <main class="ranking-page">
   <div class="ranking-container">
     <h1>Ranking</h1>
+    <p><%= rankDate.slice(0, 4) + '-' + rankDate.slice(4, 6) %></p>
     <% top10Sake.forEach((item, index) => { %>
     <div>Rank <%= index + 1 %>: <%= item.name %></div>
     <% }) %>
