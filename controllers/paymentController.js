@@ -4,7 +4,10 @@ const { getCartDetails, getCartItems } = require("./cartController");
 async function createOrder(userId, cartId) {
   const cartDetails = await getCartDetails(cartId);
   const cartItems = await getCartItems(cartId);
+  console.log("cartDetails---");
   console.log(cartDetails);
+  console.log("cartItems---");
+  console.log(cartItems);
 
   await client.query("BEGIN");
   try {
@@ -15,8 +18,8 @@ async function createOrder(userId, cartId) {
     const orderId = result.rows[0].id;
     cartItems.forEach(async (item) => {
       await client.query(
-        "INSERT INTO Orders_OrderItem (order_id, cart_item_id) VALUES ($1, $2)",
-        [orderId, item.cart_item_id]
+        "INSERT INTO Orders_OrderItem (order_id, cart_item_id, quantity) VALUES ($1, $2, $3)",
+        [orderId, item.cart_item_id, item.quantity]
       );
     });
     await client.query("COMMIT");

@@ -3,12 +3,14 @@
     <h1>Order</h1>
     <ul>
       <% order.forEach(item => { %>
-      <li><%= item.name %> <%= item.price %> <%= item.quantity %></li>
+      <li>
+        <%= item.name %> <%= parseInt(item.price) %>JPY : <%= item.quantity %>
+      </li>
       <% }) %>
     </ul>
     <p>
-      Total: <%= order.reduce((acc, item) => acc + item.price * item.quantity,
-      0) %> JPY
+      Total: <%= order.reduce((acc, item) => acc + parseInt(item.price) *
+      item.quantity, 0) %> JPY
     </p>
     <p>Date: <%= order[0].ordered_date %></p>
   </div>

@@ -3,7 +3,7 @@
     <img src="/images/sake/<%= item.image %>" alt="<%= item.name %>" />
     <div class="item-info">
       <h2><%= item.name %></h2>
-      <p>Price: <%= item.price %>JPY</p>
+      <p>Price: <%= parseInt(item.price) %> JPY</p>
       <p>Description: <br /><%= item.description %></p>
       <% if (req.session.userId) { %>
       <form action="/cart" method="post">

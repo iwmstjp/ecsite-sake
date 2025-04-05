@@ -4,7 +4,7 @@
     <div class="item">
       <img src="/images/sake/<%= item.image %>" alt="<%= item.name %>" />
       <h2><%= item.name %></h2>
-      <p><%= item.price %>JPY</p>
+      <p><%= parseInt(item.price) %> JPY</p>
       <form action="/item/<%= item.id %>" method="post">
         <input type="hidden" name="itemId" value="<%= item.id %>" />
         <button type="submit">view details</button>

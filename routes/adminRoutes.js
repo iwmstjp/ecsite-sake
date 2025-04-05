@@ -73,10 +73,8 @@ router.post(
     const existingItem = await fetchItemById(itemId);
     if (file) {
       imageName = file.filename;
-      console.log("true:" + imageName);
     } else {
       imageName = existingItem.image;
-      console.log("false:" + imageName);
     }
 
     await updateItem(name, price, description, imageName, itemId);
@@ -86,6 +84,7 @@ router.post(
 
 router.post("/admin/delete-item/:itemId", ensureAdmin, async (req, res) => {
   const itemId = req.params.itemId;
+  console.log("deleteItem:", itemId);
   await deleteItem(itemId);
   res.redirect("/admin/dashboard");
 });
