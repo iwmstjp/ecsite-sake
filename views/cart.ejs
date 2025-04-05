@@ -21,7 +21,7 @@
         <% cartItems.forEach(item => { %>
         <tr>
           <td><%= item.name %></td>
-          <td><%= item.price %>JPY</td>
+          <td><%= parseInt(item.price) %> JPY</td>
           <td class="cart-table-quantity">
             <form action="/cart/update" method="post">
               <input type="hidden" name="itemId" value="<%= item.id %>" />
@@ -34,7 +34,7 @@
               <button type="submit">Update</button>
             </form>
           </td>
-          <td><%= item.total.toFixed(2) %>JPY</td>
+          <td><%= parseInt(item.total) %> JPY</td>
           <td>
             <form action="/cart/delete" method="post">
               <input type="hidden" name="itemId" value="<%= item.id %>" />
@@ -47,7 +47,7 @@
       <tfoot>
         <tr>
           <td colspan="3">Total:</td>
-          <td><%= total.toFixed(2) %>JPY</td>
+          <td><%= parseInt(total) %>JPY</td>
         </tr>
       </tfoot>
     </table>

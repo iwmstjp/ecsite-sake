@@ -5,6 +5,7 @@
       action="/admin/edit-item/<%= item.id %>"
       method="post"
       enctype="multipart/form-data"
+      id="admin-edit-item-form"
     >
       <div class="admin-edit-item-form-group">
         <label for="name">Name</label>
@@ -36,7 +37,7 @@
       </div>
     </form>
     <div class="admin-edit-item-form-buttons">
-      <button type="submit">edit</button>
+      <button type="submit" form="admin-edit-item-form">edit</button>
       <form action="/admin/delete-item/<%= item.id %>" method="post">
         <button type="submit">delete</button>
       </form>
