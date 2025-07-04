@@ -11,6 +11,6 @@
     "stripe": "^17.7.0"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "dev": "nodemon app.js"
   }
 }

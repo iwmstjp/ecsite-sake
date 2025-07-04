@@ -23,7 +23,7 @@
 |-----------|--------------------------|
 | Backend   | Node.js, Express         |
 | DB        | PostgreSQL               |
-| 決済API    | Stripe                   |
+| API    | Stripe, Sake-no-wa               |
 
 ---
 
@@ -33,3 +33,5 @@
 git clone https://github.com/iwmstjp/ecsite-sake.git
 cd ecsite-sake
 npm install
+cp .env.example .env
+npm run dev
